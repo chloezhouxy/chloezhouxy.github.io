@@ -62,6 +62,8 @@ d3.csv("us-states.csv").then(data => {
             scene2();
         } else if (params.currentScene === 2) {
             scene3();
+        } else if (params.currentScene === 3) {
+            scene4();
         }
     }
 
@@ -131,16 +133,65 @@ d3.csv("us-states.csv").then(data => {
             .text("Increase in mid-2022");
     }
 
+    function scene4() {
+        const scene = svg.append("g").attr("class", "scene");
+
+        // Create a dropdown for state selection
+        const states = Array.from(new Set(data.map(d => d.state)));
+        const dropdown = d3.select("body").append("select")
+            .attr("id", "stateDropdown")
+            .on("change", () => {
+                const selectedState = dropdown.node().value;
+                updateStateTrend(selectedState);
+            });
+
+        dropdown.selectAll("option")
+            .data(states)
+            .enter()
+            .append("option")
+            .text(d => d);
+
+        // Initial trend for the first state
+        updateStateTrend(states[0]);
+
+        function updateStateTrend(state) {
+            const stateData = data.filter(d => d.state === state);
+
+            // Remove previous path if any
+            svg.selectAll(".state-trend").remove();
+
+            // Draw the trend for the selected state
+            scene.append("path")
+                .datum(stateData)
+                .attr("class", "state-trend")
+                .attr("fill", "none")
+                .attr("stroke", "steelblue")
+                .attr("stroke-width", 1.5)
+                .attr("d", d3.line()
+                    .x(d => x(d.date))
+                    .y(d => y(d.cases))
+                );
+
+            // Add annotation
+            svg.selectAll(".annotation").remove();
+            svg.append("text")
+                .attr("class", "annotation")
+                .attr("x", x(stateData[Math.floor(stateData.length / 2)].date))
+                .attr("y", y(stateData[Math.floor(stateData.length / 2)].cases))
+                .text(`Trend for ${state}`);
+        }
+    }
+
     // Add navigation buttons
     d3.select("#prevButton")
         .on("click", () => {
-            params.currentScene = (params.currentScene - 1 + 3) % 3;
+            params.currentScene = (params.currentScene - 1 + 4) % 4;
             updateScene();
         });
 
     d3.select("#nextButton")
         .on("click", () => {
-            params.currentScene = (params.currentScene + 1) % 3;
+            params.currentScene = (params.currentScene + 1) % 4;
             updateScene();
         });
 
