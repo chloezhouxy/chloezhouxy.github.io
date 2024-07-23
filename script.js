@@ -86,6 +86,8 @@ d3.csv("us-states.csv").then(data => {
             .attr("class", "annotation")
             .attr("x", x(new Date("2020-04-01")))
             .attr("y", y(d3.max(cases2020, d => d.cases)) - 10000) // Adjusted height
+            .attr("fill", "black")
+            .attr("font-size", "12px")
             .text("Spike in cases in April 2020");
     }
 
@@ -108,6 +110,8 @@ d3.csv("us-states.csv").then(data => {
             .attr("class", "annotation")
             .attr("x", x(new Date("2021-01-01")))
             .attr("y", y(d3.max(cases2021, d => d.cases)) - 10000) // Adjusted height
+            .attr("fill", "black")
+            .attr("font-size", "12px")
             .text("Surge in January 2021");
     }
 
@@ -130,6 +134,8 @@ d3.csv("us-states.csv").then(data => {
             .attr("class", "annotation")
             .attr("x", x(new Date("2022-07-01")))
             .attr("y", y(d3.max(cases2022, d => d.cases)) - 10000) // Adjusted height
+            .attr("fill", "black")
+            .attr("font-size", "12px")
             .text("Increase in mid-2022");
     }
 
@@ -182,6 +188,8 @@ d3.csv("us-states.csv").then(data => {
                 .attr("class", "annotation")
                 .attr("x", x(stateData[Math.floor(stateData.length / 2)].date))
                 .attr("y", y(stateData[Math.floor(stateData.length / 2)].cases) - 1000)
+                .attr("fill", "black")
+                .attr("font-size", "12px")
                 .text(`Trend for ${state}`);
         }
     }
