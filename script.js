@@ -85,7 +85,7 @@ d3.csv("us-states.csv").then(data => {
         scene.append("text")
             .attr("class", "annotation")
             .attr("x", x(new Date("2020-04-01")))
-            .attr("y", y(30000))
+            .attr("y", y(d3.max(cases2020, d => d.cases)) - 10000) // Adjusted height
             .text("Spike in cases in April 2020");
     }
 
@@ -107,7 +107,7 @@ d3.csv("us-states.csv").then(data => {
         scene.append("text")
             .attr("class", "annotation")
             .attr("x", x(new Date("2021-01-01")))
-            .attr("y", y(40000))
+            .attr("y", y(d3.max(cases2021, d => d.cases)) - 10000) // Adjusted height
             .text("Surge in January 2021");
     }
 
@@ -129,7 +129,7 @@ d3.csv("us-states.csv").then(data => {
         scene.append("text")
             .attr("class", "annotation")
             .attr("x", x(new Date("2022-07-01")))
-            .attr("y", y(50000))
+            .attr("y", y(d3.max(cases2022, d => d.cases)) - 10000) // Adjusted height
             .text("Increase in mid-2022");
     }
 
@@ -157,6 +157,10 @@ d3.csv("us-states.csv").then(data => {
         function updateStateTrend(state) {
             const stateData = data.filter(d => d.state === state);
 
+            // Update y-axis scale based on selected state data
+            y.domain([0, d3.max(stateData, d => d.cases)]).nice();
+            yAxis.transition().duration(1000).call(d3.axisLeft(y));
+
             // Remove previous path if any
             svg.selectAll(".state-trend").remove();
 
@@ -177,7 +181,7 @@ d3.csv("us-states.csv").then(data => {
             svg.append("text")
                 .attr("class", "annotation")
                 .attr("x", x(stateData[Math.floor(stateData.length / 2)].date))
-                .attr("y", y(stateData[Math.floor(stateData.length / 2)].cases))
+                .attr("y", y(stateData[Math.floor(stateData.length / 2)].cases) - 1000)
                 .text(`Trend for ${state}`);
         }
     }
