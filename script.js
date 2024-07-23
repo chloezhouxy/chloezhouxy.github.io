@@ -85,7 +85,7 @@ d3.csv("us-states.csv").then(data => {
         scene.append("text")
             .attr("class", "annotation")
             .attr("x", x(new Date("2020-04-01")))
-            .attr("y", y(d3.max(cases2020, d => d.cases)) - 10000) // Adjusted height
+            .attr("y", y(d3.max(cases2020, d => d.cases))) // Adjusted height
             .attr("fill", "black")
             .attr("font-size", "12px")
             .text("Spike in cases in April 2020");
