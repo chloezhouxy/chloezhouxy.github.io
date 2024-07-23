@@ -155,6 +155,14 @@ d3.csv("us-states.csv").then(data => {
 
         addTitle(scene, "COVID-19 Daily Cases by State");
 
+        // Add description for the dropdown
+        scene.append("text")
+            .attr("class", "annotation")
+            .attr("x", width / 2)
+            .attr("y", height + margin.bottom - 30)
+            .style("text-anchor", "middle")
+            .text("Select a state from the dropdown to view its trend");
+
         // Create a dropdown for state selection
         const states = Array.from(new Set(data.map(d => d.state)));
         const dropdown = d3.select("#stateDropdown").style("display", "block")
