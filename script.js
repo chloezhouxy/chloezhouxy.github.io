@@ -12,7 +12,7 @@ const svg = d3.select("#visualization").append("svg")
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
 // Load the data
-d3.csv("us-states.csv").then(data => {
+d3.csv("data/covid19_daily_cases.csv").then(data => {
     data.forEach(d => {
         d.date = new Date(d.date);
         d.cases = +d.cases;
@@ -85,9 +85,7 @@ d3.csv("us-states.csv").then(data => {
         scene.append("text")
             .attr("class", "annotation")
             .attr("x", x(new Date("2020-04-01")))
-            .attr("y", y(d3.max(cases2020, d => d.cases))) // Adjusted height
-            .attr("fill", "black")
-            .attr("font-size", "12px")
+            .attr("y", y(d3.max(cases2020, d => d.cases)))
             .text("Spike in cases in April 2020");
     }
 
@@ -109,9 +107,7 @@ d3.csv("us-states.csv").then(data => {
         scene.append("text")
             .attr("class", "annotation")
             .attr("x", x(new Date("2021-01-01")))
-            .attr("y", y(d3.max(cases2021, d => d.cases)) - 10000) // Adjusted height
-            .attr("fill", "black")
-            .attr("font-size", "12px")
+            .attr("y", y(d3.max(cases2021, d => d.cases)))
             .text("Surge in January 2021");
     }
 
@@ -133,9 +129,7 @@ d3.csv("us-states.csv").then(data => {
         scene.append("text")
             .attr("class", "annotation")
             .attr("x", x(new Date("2022-07-01")))
-            .attr("y", y(d3.max(cases2022, d => d.cases)) - 10000) // Adjusted height
-            .attr("fill", "black")
-            .attr("font-size", "12px")
+            .attr("y", y(d3.max(cases2022, d => d.cases)))
             .text("Increase in mid-2022");
     }
 
@@ -187,9 +181,7 @@ d3.csv("us-states.csv").then(data => {
             svg.append("text")
                 .attr("class", "annotation")
                 .attr("x", x(stateData[Math.floor(stateData.length / 2)].date))
-                .attr("y", y(stateData[Math.floor(stateData.length / 2)].cases) - 1000)
-                .attr("fill", "black")
-                .attr("font-size", "12px")
+                .attr("y", y(stateData[Math.floor(stateData.length / 2)].cases))
                 .text(`Trend for ${state}`);
         }
     }
