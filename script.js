@@ -28,6 +28,8 @@ d3.csv("us-states.csv").then(data => {
         .nice()
         .range([height, 0]);
 
+    const yFixedDomain = y.domain();
+
     // Add axes
     const xAxis = svg.append("g")
         .attr("transform", `translate(0,${height})`)
@@ -68,8 +70,18 @@ d3.csv("us-states.csv").then(data => {
         }
     }
 
+    function addTitle(scene, title) {
+        scene.append("text")
+            .attr("class", "title")
+            .attr("x", width / 2)
+            .attr("y", -10)
+            .text(title);
+    }
+
     function scene1() {
         const scene = svg.append("g").attr("class", "scene");
+
+        addTitle(scene, "COVID-19 Daily Cases in 2020");
         
         const cases2020 = data.filter(d => d.date.getFullYear() === 2020);
         scene.append("path")
@@ -93,6 +105,8 @@ d3.csv("us-states.csv").then(data => {
     function scene2() {
         const scene = svg.append("g").attr("class", "scene");
 
+        addTitle(scene, "COVID-19 Daily Cases in 2021");
+
         const cases2021 = data.filter(d => d.date.getFullYear() === 2021);
         scene.append("path")
             .datum(cases2021)
@@ -115,6 +129,8 @@ d3.csv("us-states.csv").then(data => {
     function scene3() {
         const scene = svg.append("g").attr("class", "scene");
 
+        addTitle(scene, "COVID-19 Daily Cases in 2022");
+
         const cases2022 = data.filter(d => d.date.getFullYear() === 2022);
         scene.append("path")
             .datum(cases2022)
@@ -136,6 +152,8 @@ d3.csv("us-states.csv").then(data => {
 
     function scene4() {
         const scene = svg.append("g").attr("class", "scene");
+
+        addTitle(scene, "COVID-19 Daily Cases by State");
 
         // Create a dropdown for state selection
         const states = Array.from(new Set(data.map(d => d.state)));
@@ -190,12 +208,18 @@ d3.csv("us-states.csv").then(data => {
     d3.select("#prevButton")
         .on("click", () => {
             params.currentScene = (params.currentScene - 1 + 4) % 4;
+            y.domain(yFixedDomain);
+            yAxis.transition().duration(1000).call(d3.axisLeft(y));
             updateScene();
         });
 
     d3.select("#nextButton")
         .on("click", () => {
             params.currentScene = (params.currentScene + 1) % 4;
+            if (params.currentScene !== 3) {
+                y.domain(yFixedDomain);
+                yAxis.transition().duration(1000).call(d3.axisLeft(y));
+            }
             updateScene();
         });
 
