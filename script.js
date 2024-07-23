@@ -12,7 +12,7 @@ const svg = d3.select("#visualization").append("svg")
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
 // Load the data
-d3.csv("data/covid19_daily_cases.csv").then(data => {
+d3.csv("us-states.csv").then(data => {
     data.forEach(d => {
         d.date = new Date(d.date);
         d.cases = +d.cases;
