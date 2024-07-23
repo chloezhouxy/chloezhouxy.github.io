@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -5,16 +6,32 @@
     <title>COVID-19 Daily Cases Trending Visualization</title>
     <script src="https://d3js.org/d3.v6.min.js"></script>
     <style>
-        body { font-family: Arial, sans-serif; }
-        #visualization { margin: 20px; }
-        .annotation { font-size: 12px; fill: red; }
-        .axis-label { font-size: 14px; }
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .annotation {
+            font-size: 12px;
+            fill: black;
+        }
+        .axis-label {
+            font-size: 14px;
+            font-weight: bold;
+        }
+        #controls {
+            margin-bottom: 20px;
+        }
+        #stateDropdown {
+            margin-left: 10px;
+        }
     </style>
 </head>
 <body>
+    <div id="controls">
+        <button id="prevButton">Previous</button>
+        <button id="nextButton">Next</button>
+        <select id="stateDropdown" style="display: none;"></select>
+    </div>
     <div id="visualization"></div>
-    <button id="prevButton">Previous</button>
-    <button id="nextButton">Next</button>
     <script src="script.js"></script>
 </body>
 </html>
